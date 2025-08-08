@@ -1,2 +1,2 @@
-def run() -> str:
-    return "Hello from angrydriver!"
+def run():
+    print("Hello from angrydriver!")
