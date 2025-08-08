@@ -1,3 +1,4 @@
+import enum
 import re
 import serial
 import sys
@@ -6,6 +7,12 @@ import sys
 SERIAL_PORT = sys.argv[1] if len(sys.argv) > 1 else "COM15"  # Default to COM15 if no argument is provided
 BAUD_RATE = 115200  ## You don't need to change this
 
+class Control(enum.Enum):
+    SwipeLeft = 1
+    SwipeRight = 2
+    SwipeUp = 3
+    SwipeDown = 4
+    Push = 5
 
 def read_and_parse_serial():
     # Open the serial connection
@@ -22,20 +29,15 @@ def read_and_parse_serial():
                 if match:
                     gesture = match.group(1)
                     if gesture == "SwipeLeft":
-                        ## Do something for SwipeLeft
-                        pass
+                        return Control.SwipeLeft
                     elif gesture == "SwipeRight":
-                        ## Do something for SwipeRight
-                        pass
+                        return Control.SwipeRight
                     elif gesture == "SwipeUp":
-                        ## Do something for SwipeUp
-                        pass
+                        return Control.SwipeUp
                     elif gesture == "SwipeDown":
-                        ## Do something for SwipeDown
-                        pass
+                        return Control.SwipeDown
                     elif gesture == "Push":
-                        ## Do something for Push
-                        pass
+                        return Control.Push
                     else:
                         raise ValueError(f"Unknown gesture: {gesture}")
                     print(f"{gesture}")
