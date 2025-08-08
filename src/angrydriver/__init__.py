@@ -1,2 +1,4 @@
+from angrydriver.eventloop import run
+
 def run():
-    print("Hello from angrydriver!")
+    run()

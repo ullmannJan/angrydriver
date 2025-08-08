@@ -6,7 +6,6 @@ import pygame
 
 from angrydriver.hardware import read_and_parse_serial
 
-
  
 
 # ---------- Config ----------
@@ -253,13 +252,6 @@ def run():
 
     
 
-    # Player state
-
-    speed_kmh = 0.0
-
-    prev_speed_kmh = 0.0
-
-    
 
     center_lane = (LANES - 1) / 2.0
 
@@ -293,13 +285,7 @@ def run():
 
     # Car management
 
-    cars = []
-
     car_spawn_timer = 0.0
-
-    import random
-
-    
 
     running = True
 
@@ -309,11 +295,6 @@ def run():
 
         dt_safe = max(dt, 1e-4)
 
-    
-
-        # ---------- Input ----------
-
-        
         control = read_and_parse_serial() 
 
         match control:
@@ -322,41 +303,6 @@ def run():
             case 2:
                 target_lane = min(LANES - 1, target_lane + 1)
 
-        for e in pygame.event.get():
-
-            if e.type == pygame.QUIT:
-
-                running = False
-
-            elif e.type == pygame.KEYDOWN:
-
-                if e.key == pygame.K_ESCAPE:
-
-                    running = False
-
-                elif e.key in (pygame.K_LEFT, pygame.K_a):
-
-                    target_lane = max(0, target_lane - 1)
-
-                elif e.key in (pygame.K_RIGHT, pygame.K_d):
-
-                    target_lane = min(LANES - 1, target_lane + 1)
-
-    
-
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-
-            speed_kmh += ACCEL_KMH_S * dt
-
-        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
-
-            speed_kmh -= BRAKE_KMH_S * dt
-
-        else:
-
-            speed_kmh -= DRAG_KMH_S * dt
 
         speed_kmh = clamp(speed_kmh, 0, MAX_KMH)
 
